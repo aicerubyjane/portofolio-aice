@@ -4,9 +4,11 @@ document.documentElement.classList.add("js");
 let lenis = null;
 if (typeof Lenis !== "undefined") {
   lenis = new Lenis({
-    lerp: 0.12,
-    wheelMultiplier: 1.0,
+    lerp: 0.1,
     smoothWheel: true,
+    wheelMultiplier: 1.0,
+    touchMultiplier: 2.0,
+    infinite: false,
   });
 
   function raf(time) {
@@ -57,18 +59,67 @@ const designCodeSplit = document.querySelector(".design-code .hero-split");
 const designSide = document.querySelector(".design-code .hero-side-design");
 const codeSide = document.querySelector(".design-code .hero-side-code");
 
+const updateCatAlignment = () => {
+  const stage = document.querySelector(".cat-stage");
+  if (!stage) return;
+  const rect = stage.getBoundingClientRect();
+  const width = rect.width;
+  const height = rect.height;
+
+  const S_css = 1.012;
+
+  const sLight = Math.max(width / 1920, height / 900);
+  const sDark = Math.max(width / 1672, height / 941);
+
+  // Restored and fine-tuned scales/positions:
+  const designScaleLight = 1.256;
+  const designDxLight = (-32 * sLight) / (S_css * designScaleLight);
+  const designDyLight = (32 * sLight) / (S_css * designScaleLight); // Shifted up slightly (from 24 to 16)
+
+  const codeScaleLight = 0.930;
+  const codeDxLight = (15 * sLight) / (S_css * codeScaleLight);
+  const codeDyLight = (15 * sLight) / (S_css * codeScaleLight);
+
+  const designScaleDark = 1.298;
+  const designDxDark = (40 * sDark) / (S_css * designScaleDark);
+  const designDyDark = (-38 * sDark) / (S_css * designScaleDark);
+
+  // Coder is shifted relative to designer: dxCode = 52 + 15 * 1.298 = 71.5, dyCode = -28 + 11 * 1.298 = -14
+  const codeScaleDark = 1.650;
+  const codeDxDark = (172 * sDark) / (S_css * codeScaleDark);
+  const codeDyDark = (-36 * sDark) / (S_css * codeScaleDark);
+
+  stage.style.setProperty("--design-dx-light", `${designDxLight}px`);
+  stage.style.setProperty("--design-dy-light", `${designDyLight}px`);
+  stage.style.setProperty("--design-scale-light", `${designScaleLight}`);
+
+  stage.style.setProperty("--code-dx-light", `${codeDxLight}px`);
+  stage.style.setProperty("--code-dy-light", `${codeDyLight}px`);
+  stage.style.setProperty("--code-scale-light", `${codeScaleLight}`);
+
+  stage.style.setProperty("--design-dx-dark", `${designDxDark}px`);
+  stage.style.setProperty("--design-dy-dark", `${designDyDark}px`);
+  stage.style.setProperty("--design-scale-dark", `${designScaleDark}`);
+
+  stage.style.setProperty("--code-dx-dark", `${codeDxDark}px`);
+  stage.style.setProperty("--code-dy-dark", `${codeDyDark}px`);
+  stage.style.setProperty("--code-scale-dark", `${codeScaleDark}`);
+};
+
 const setTheme = (theme) => {
   const nextTheme = theme === "dark" ? "dark" : "light";
   const currentLang = document.documentElement.dataset.lang || "en";
   document.documentElement.dataset.theme = nextTheme;
   localStorage.setItem("portfolio-theme", nextTheme);
   themeToggle?.setAttribute("aria-pressed", String(nextTheme === "dark"));
-  
+
   if (nextTheme === "dark") {
     themeToggle?.setAttribute("aria-label", currentLang === "id" ? "Ganti ke mode terang" : "Switch to light mode");
   } else {
     themeToggle?.setAttribute("aria-label", currentLang === "id" ? "Ganti ke mode gelap" : "Switch to dark mode");
   }
+
+  updateCatAlignment();
 };
 
 const langToggle = document.querySelector(".lang-toggle");
@@ -89,8 +140,10 @@ const setLanguage = (lang) => {
   }
 };
 
+const isMobileDevice = window.matchMedia("(max-width: 720px)").matches;
+const defaultThemeFallback = isMobileDevice ? "dark" : "light";
 setLanguage(localStorage.getItem("portfolio-lang") || "en");
-setTheme(localStorage.getItem("portfolio-theme") || "light");
+setTheme(localStorage.getItem("portfolio-theme") || defaultThemeFallback);
 
 langToggle?.addEventListener("click", () => {
   const nextLang = document.documentElement.dataset.lang === "id" ? "en" : "id";
@@ -410,6 +463,7 @@ window.addEventListener(
     skillResizeTimer = window.setTimeout(() => {
       renderSkillPosition(false);
     }, 120);
+    updateCatAlignment();
   },
   { passive: true }
 );
@@ -417,6 +471,7 @@ window.addEventListener(
 window.requestAnimationFrame(() => {
   applySkillBaseStyles();
   focusSkill(0, false);
+  updateCatAlignment();
 });
 
 filterButtons.forEach((button) => {
@@ -438,8 +493,135 @@ const setDesignCodeFocus = (focus) => {
   designCodeSplit.classList.toggle("is-code-focus", focus === "code");
 };
 
-if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  designSide?.addEventListener("pointerenter", () => setDesignCodeFocus("design"));
-  codeSide?.addEventListener("pointerenter", () => setDesignCodeFocus("code"));
-  designCodeSplit?.addEventListener("pointerleave", () => setDesignCodeFocus(null));
+designSide?.addEventListener("pointerenter", () => setDesignCodeFocus("design"));
+designSide?.addEventListener("pointermove", () => setDesignCodeFocus("design"));
+designSide?.addEventListener("mouseenter", () => setDesignCodeFocus("design"));
+designSide?.addEventListener("mouseover", () => setDesignCodeFocus("design"));
+
+codeSide?.addEventListener("pointerenter", () => setDesignCodeFocus("code"));
+codeSide?.addEventListener("pointermove", () => setDesignCodeFocus("code"));
+codeSide?.addEventListener("mouseenter", () => setDesignCodeFocus("code"));
+codeSide?.addEventListener("mouseover", () => setDesignCodeFocus("code"));
+
+designCodeSplit?.addEventListener("pointerleave", () => setDesignCodeFocus(null));
+designCodeSplit?.addEventListener("mouseleave", () => setDesignCodeFocus(null));
+
+// Shrink header on scroll (only when entering cat section) and ScrollSpy nav highlighting
+const header = document.querySelector(".site-header");
+const catSection = document.querySelector(".design-code");
+
+let currentProgress = 0;
+let targetProgress = 0;
+let animationFrameId = null;
+
+const loop = () => {
+  currentProgress += (targetProgress - currentProgress) * 0.07; // 0.07 damp factor for silk-smooth feeling
+  
+  if (header) {
+    header.style.setProperty("--scroll-progress", currentProgress.toFixed(4));
+  }
+
+  if (Math.abs(targetProgress - currentProgress) > 0.0001) {
+    animationFrameId = requestAnimationFrame(loop);
+  } else {
+    currentProgress = targetProgress;
+    if (header) {
+      header.style.setProperty("--scroll-progress", currentProgress);
+    }
+    animationFrameId = null;
+  }
+};
+
+const handleHeaderAndScrollSpy = () => {
+  const scrollY = window.scrollY;
+  
+  // Calculate target progress based on scroll position (start at 0, fully collapsed at 400px)
+  targetProgress = Math.min(Math.max(scrollY / 400, 0), 1);
+  
+  // Trigger animation loop
+  if (!animationFrameId) {
+    animationFrameId = requestAnimationFrame(loop);
+  }
+
+  let currentSectionId = "";
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop - 180;
+    const sectionHeight = section.offsetHeight;
+    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+      currentSectionId = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href === `#${currentSectionId}`) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+};
+
+window.addEventListener("scroll", handleHeaderAndScrollSpy, { passive: true });
+handleHeaderAndScrollSpy();
+
+// Mobile Interactive Cat Hero State Machine
+const mobileCatHero = document.querySelector(".mobile-cat-hero");
+const mobileCatCard = document.getElementById("mobileCatCard");
+const modePillButtons = document.querySelectorAll(".mobile-mode-indicator .mode-pill");
+
+if (mobileCatHero && mobileCatCard) {
+  let currentMobileMode = "coder";
+
+  const setMobileMode = (newMode) => {
+    currentMobileMode = newMode;
+    mobileCatHero.setAttribute("data-mobile-mode", newMode);
+
+    // Update pill buttons
+    modePillButtons.forEach((pill) => {
+      const mode = pill.getAttribute("data-mode");
+      const dot = pill.querySelector(".dot");
+      if (mode === newMode) {
+        pill.classList.add("active");
+        if (dot) dot.textContent = "●";
+      } else {
+        pill.classList.remove("active");
+        if (dot) dot.textContent = "○";
+      }
+    });
+  };
+
+  const toggleMobileMode = () => {
+    // Press animation
+    mobileCatCard.classList.add("is-tapping");
+    setTimeout(() => {
+      mobileCatCard.classList.remove("is-tapping");
+    }, 450);
+
+    const nextMode = currentMobileMode === "designer" ? "coder" : "designer";
+    setMobileMode(nextMode);
+  };
+
+  mobileCatCard.addEventListener("click", toggleMobileMode);
+  mobileCatCard.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleMobileMode();
+    }
+  });
+
+  modePillButtons.forEach((pill) => {
+    pill.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const targetMode = pill.getAttribute("data-mode");
+      if (targetMode && targetMode !== currentMobileMode) {
+        // Press animation
+        mobileCatCard.classList.add("is-tapping");
+        setTimeout(() => {
+          mobileCatCard.classList.remove("is-tapping");
+        }, 450);
+        setMobileMode(targetMode);
+      }
+    });
+  });
 }

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
   <link rel="icon" type="image/webp" href="assets/aice-profile.webp">
 </head>
 <body>
@@ -128,7 +128,8 @@
     </section>
 
     <section class="section design-code" aria-label="Design and code focus">
-      <div class="hero-split reveal">
+      <!-- Desktop Split Hero Layout (Hidden on Mobile) -->
+      <div class="hero-split desktop-only reveal">
         <section class="hero-side hero-side-design" aria-label="Design focus">
           <p class="eyebrow">Aicerubyjane</p>
           <h1>
@@ -166,6 +167,79 @@
             <l-id>Saya membangun halaman responsif, alur aplikasi, penyaringan, formulir, ide berbasis database, dan detail JavaScript.</l-id>
           </p>
         </section>
+      </div>
+
+      <!-- Mobile Interactive Cat Hero Layout (Hidden on Desktop) -->
+      <div class="mobile-cat-hero mobile-only reveal" data-mobile-mode="coder">
+        <!-- 1. Eyebrow -->
+        <p class="mobile-eyebrow">AICERUBYJANE</p>
+
+        <!-- 2. Interactive Cat Container -->
+        <div class="mobile-cat-card" id="mobileCatCard" role="button" tabindex="0" aria-label="Tap to switch between Designer and Coder mode">
+          <div class="mobile-cat-stage">
+            <img class="mobile-cat-img img-designer-light" src="assets/designer-aice.webp" alt="Designer Cat">
+            <img class="mobile-cat-img img-designer-dark" src="assets/designer-aice-dark.webp" alt="Designer Cat Dark">
+            <img class="mobile-cat-img img-coder-light" src="assets/coder-aice.webp" alt="Coder Cat">
+            <img class="mobile-cat-img img-coder-dark" src="assets/coder-aice-dark.webp" alt="Coder Cat Dark">
+          </div>
+          <div class="mobile-cat-glow"></div>
+        </div>
+
+        <!-- 3. Tap Hint -->
+        <div class="mobile-tap-hint">
+          <span>
+            <l-en>TAP THE CAT ↻</l-en>
+            <l-id>TEKAN KUCINGNYA ↻</l-id>
+          </span>
+        </div>
+
+        <!-- 4. Title -->
+        <h2 class="mobile-title">
+          <span class="title-designer">
+            <l-en>designer</l-en>
+            <l-id>desainer</l-id>
+          </span>
+          <span class="title-coder">
+            <l-en>&lt;coder&gt;</l-en>
+            <l-id>&lt;coder&gt;</l-id>
+          </span>
+        </h2>
+
+        <!-- 5. Description -->
+        <div class="mobile-desc">
+          <p class="desc-designer">
+            <l-en>I shape layouts, hierarchy, Figma systems, Adobe visuals, and interface rhythm until the screen feels intentional.</l-en>
+            <l-id>Saya membentuk tata letak, hierarki, sistem Figma, visual Adobe, dan ritme antarmuka hingga layar terasa disengaja.</l-id>
+          </p>
+          <p class="desc-coder">
+            <l-en>I build responsive pages, app flows, filtering, forms, database-backed ideas, and JavaScript details.</l-en>
+            <l-id>Saya membangun halaman responsif, alur aplikasi, penyaringan, formulir, ide berbasis database, dan detail JavaScript.</l-id>
+          </p>
+        </div>
+
+        <!-- 6. Mode Indicator Pills -->
+        <div class="mobile-mode-indicator">
+          <button class="mode-pill" data-mode="designer">
+            <span class="dot">○</span>
+            Designer
+          </button>
+          <button class="mode-pill active" data-mode="coder">
+            <span class="dot">●</span>
+            Coder
+          </button>
+        </div>
+
+        <!-- 7. CTA -->
+        <div class="mobile-cta">
+          <a class="button primary cta-designer" href="#projects">
+            <l-en>Explore design work →</l-en>
+            <l-id>Jelajahi karya desain →</l-id>
+          </a>
+          <a class="button primary cta-coder" href="#projects">
+            <l-en>View code projects →</l-en>
+            <l-id>Lihat proyek kode →</l-id>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -450,8 +524,6 @@
         </button>
         <button class="filter-button" type="button" data-filter="javascript">JavaScript</button>
         <button class="filter-button" type="button" data-filter="python">Python</button>
-        <button class="filter-button" type="button" data-filter="php">PHP</button>
-        <button class="filter-button" type="button" data-filter="database">Database</button>
       </div>
 
       <div class="projects-grid">
@@ -469,8 +541,8 @@
             <l-id>Dasbor Penjualan, Kas, dan Persediaan Harian</l-id>
           </p>
           <p>
-            <l-en>A web dashboard and Telegram bot that read sales, cash, and inventory from Google Sheets, with daily summaries available in the bot. Deployed on Vercel.</l-en>
-            <l-id>Dasbor web dan bot Telegram yang membaca penjualan, kas, dan persediaan dari Google Sheets, dengan ringkasan harian di dalam bot. Dideploy di Vercel.</l-id>
+            <l-en>A web dashboard and Telegram bot that read sales, cash, and inventory from Google Sheets, with daily summaries available in the bot.</l-en>
+            <l-id>Dasbor web dan bot Telegram yang membaca penjualan, kas, dan persediaan dari Google Sheets, dengan ringkasan harian di dalam bot.</l-id>
           </p>
           <div class="tags"><span>Python</span><span>FastAPI</span><span>Google Sheets</span><span>Telegram</span></div>
           <ul>
@@ -483,11 +555,105 @@
               <l-id>Backend FastAPI dengan klien Google Sheets dan modul bot</l-id>
             </li>
           </ul>
+          <div class="project-links"><a class="project-link" href="https://ai-finance-auditor-eight.vercel.app" target="_blank" rel="noreferrer noopener">Live Demo</a><a class="project-link" href="https://github.com/aicerubyjane/ai-finance-auditor" target="_blank" rel="noreferrer noopener">GitHub</a></div>
+        </article>
+
+        <article class="project-card reveal" data-category="python">
+          <div class="project-topline">
+            <span>02</span>
+            <span>
+              <l-en>Telegram Commerce Bot</l-en>
+              <l-id>Bot Jualan Telegram</l-id>
+            </span>
+          </div>
+          <h3>Telegram Shop Bot</h3>
+          <p class="project-subtitle">
+            <l-en>Digital Product Store Inside Telegram</l-en>
+            <l-id>Toko Produk Digital di Dalam Telegram</l-id>
+          </p>
+          <p>
+            <l-en>A production Telegram bot that sells digital products end to end: catalog, QRIS payment, automatic delivery, and reseller credit.</l-en>
+            <l-id>Bot Telegram produksi yang menjual produk digital dari awal sampai akhir: katalog, pembayaran QRIS, pengiriman otomatis, dan kredit reseller.</l-id>
+          </p>
+          <div class="tags"><span>Python</span><span>python-telegram-bot</span><span>SQLite</span><span>QRIS</span></div>
+          <ul>
+            <li>
+              <l-en>Bulk pricing, vouchers, referrals, restock waitlist, and maintenance mode</l-en>
+              <l-id>Harga bulk, voucher, referral, daftar tunggu restok, dan mode maintenance</l-id>
+            </li>
+            <li>
+              <l-en>Automatic daily backups, health checks, and admin reports</l-en>
+              <l-id>Backup harian otomatis, cek kesehatan, dan laporan admin</l-id>
+            </li>
+          </ul>
+          <div class="project-links"><a class="project-link" href="https://t.me/aireshgpt_bot" target="_blank" rel="noreferrer noopener">Open in Telegram</a></div>
         </article>
 
         <article class="project-card reveal" data-category="javascript">
           <div class="project-topline">
-            <span>02</span>
+            <span>03</span>
+            <span>
+              <l-en>Online Store</l-en>
+              <l-id>Toko Online</l-id>
+            </span>
+          </div>
+          <h3>Aicestore</h3>
+          <p class="project-subtitle">
+            <l-en>Clear Access to Digital AI Products</l-en>
+            <l-id>Akses Produk AI Digital yang Jelas</l-id>
+          </p>
+          <p>
+            <l-en>A storefront for AI subscriptions with transparent price, stock, contents, and warranty before paying, and order tracking after checkout.</l-en>
+            <l-id>Etalase langganan AI dengan harga, stok, isi produk, dan garansi yang jelas sebelum bayar, serta pelacakan pesanan setelah checkout.</l-id>
+          </p>
+          <div class="tags"><span>Web</span><span>Vercel</span><span>E-commerce</span></div>
+          <ul>
+            <li>
+              <l-en>Product catalog for AI subscriptions and API access</l-en>
+              <l-id>Katalog produk langganan AI dan akses API</l-id>
+            </li>
+            <li>
+              <l-en>Order status stays trackable after checkout</l-en>
+              <l-id>Status pesanan tetap bisa dipantau setelah checkout</l-id>
+            </li>
+          </ul>
+          <div class="project-links"><a class="project-link" href="https://www.aicestore.web.id" target="_blank" rel="noreferrer noopener">Visit Site</a></div>
+        </article>
+
+        <article class="project-card reveal" data-category="javascript">
+          <div class="project-topline">
+            <span>04</span>
+            <span>
+              <l-en>Online Store</l-en>
+              <l-id>Toko Online</l-id>
+            </span>
+          </div>
+          <h3>Camellia Digital</h3>
+          <p class="project-subtitle">
+            <l-en>ChatGPT Plus Storefront</l-en>
+            <l-id>Etalase ChatGPT Plus</l-id>
+          </p>
+          <p>
+            <l-en>A storefront for monthly ChatGPT Plus plans, with private and personal-upgrade options, a promo banner, and ordering through WhatsApp.</l-en>
+            <l-id>Etalase paket ChatGPT Plus bulanan, dengan opsi private dan upgrade akun pribadi, banner promo, dan pemesanan lewat WhatsApp.</l-id>
+          </p>
+          <div class="tags"><span>Web</span><span>Netlify</span><span>WhatsApp</span></div>
+          <ul>
+            <li>
+              <l-en>Plans with and without warranty, plus personal account upgrade</l-en>
+              <l-id>Paket dengan dan tanpa garansi, plus upgrade akun pribadi</l-id>
+            </li>
+            <li>
+              <l-en>Three-step ordering flow and a coming-soon product section</l-en>
+              <l-id>Alur pesan tiga langkah dan bagian produk yang akan datang</l-id>
+            </li>
+          </ul>
+          <div class="project-links"><a class="project-link" href="https://camelliashop.aicerubyjane.my.id" target="_blank" rel="noreferrer noopener">Visit Site</a></div>
+        </article>
+
+        <article class="project-card reveal" data-category="javascript">
+          <div class="project-topline">
+            <span>05</span>
             <span>
               <l-en>Creative Tool</l-en>
               <l-id>Alat Kreatif</l-id>
@@ -502,22 +668,23 @@
             <l-en>A browser photo booth for capturing, decorating, and downloading photo strips, with live camera capture, filters, stickers, and custom frames.</l-en>
             <l-id>Photo booth berbasis browser untuk mengambil, mendekorasi, dan mengunduh strip foto, dengan kamera langsung, filter, stiker, dan bingkai kustom.</l-id>
           </p>
-          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Express</span></div>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Midtrans</span></div>
           <ul>
             <li>
-              <l-en>Ten real-time filters, countdown, and three- or four-pose strips</l-en>
-              <l-id>Sepuluh filter real-time, hitung mundur, dan strip tiga atau empat pose</l-id>
+              <l-en>Live camera capture with filters, stickers, and three- or four-pose strips</l-en>
+              <l-id>Kamera langsung dengan filter, stiker, dan strip tiga atau empat pose</l-id>
             </li>
             <li>
-              <l-en>Dynamic QRIS checkout through Midtrans on the Express backend</l-en>
-              <l-id>Checkout QRIS dinamis lewat Midtrans pada backend Express</l-id>
+              <l-en>QRIS checkout through Midtrans with server-side payment verification</l-en>
+              <l-id>Checkout QRIS lewat Midtrans dengan verifikasi pembayaran di sisi server</l-id>
             </li>
           </ul>
+          <div class="project-links"><a class="project-link" href="https://github.com/aicerubyjane/Photobox-Web" target="_blank" rel="noreferrer noopener">GitHub</a></div>
         </article>
 
         <article class="project-card reveal" data-category="javascript">
           <div class="project-topline">
-            <span>03</span>
+            <span>06</span>
             <span>
               <l-en>Browser Game</l-en>
               <l-id>Game Browser</l-id>
@@ -543,127 +710,40 @@
               <l-id>Dipublikasikan dengan demo publik di GitHub Pages</l-id>
             </li>
           </ul>
+          <div class="project-links"><a class="project-link" href="https://aicerubyjane.github.io/IDX-Chart-Rider/" target="_blank" rel="noreferrer noopener">Live Demo</a><a class="project-link" href="https://github.com/aicerubyjane/IDX-Chart-Rider" target="_blank" rel="noreferrer noopener">GitHub</a></div>
         </article>
 
         <article class="project-card reveal" data-category="javascript">
           <div class="project-topline">
-            <span>04</span>
-            <span>
-              <l-en>Simulation Game</l-en>
-              <l-id>Game Simulasi</l-id>
-            </span>
-          </div>
-          <h3>Rail Nusantara</h3>
-          <p class="project-subtitle">
-            <l-en>Railway Management Simulation Game</l-en>
-            <l-id>Game Simulasi Manajemen Perkeretaapian</l-id>
-          </p>
-          <p>
-            <l-en>A browser-based railway management simulation with dashboard-style controls, local data handling, and systems thinking around routes and operations.</l-en>
-            <l-id>Simulasi manajemen kereta api berbasis browser dengan kontrol gaya dasbor, penanganan data lokal, dan pemikiran sistem seputar rute dan operasi.</l-id>
-          </p>
-          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
-          <ul>
-            <li>
-              <l-en>Route, fleet, schedule, and ticket simulation</l-en>
-              <l-id>Simulasi rute, armada, jadwal, dan tiket</l-id>
-            </li>
-            <li>
-              <l-en>Map, economy, and localStorage systems</l-en>
-              <l-id>Sistem peta, ekonomi, dan localStorage</l-id>
-            </li>
-          </ul>
-        </article>
-
-        <article class="project-card reveal" data-category="php javascript">
-          <div class="project-topline">
-            <span>05</span>
-            <span>
-              <l-en>PHP Web App</l-en>
-              <l-id>Aplikasi Web PHP</l-id>
-            </span>
-          </div>
-          <h3>TemaTi</h3>
-          <p class="project-subtitle">
-            <l-en>PHP Profile & Transaction Web App</l-en>
-            <l-id>Aplikasi Web Profil & Transaksi PHP</l-id>
-          </p>
-          <p>
-            <l-en>A PHP practice app for profile browsing, filtering, transactions, and session-based interactions across multiple pages.</l-en>
-            <l-id>Aplikasi latihan PHP untuk penjelajahan profil, penyaringan, transaksi, dan interaksi berbasis sesi di beberapa halaman.</l-id>
-          </p>
-          <div class="tags"><span>PHP</span><span>HTML</span><span>CSS</span><span>Bootstrap</span><span>JavaScript</span></div>
-          <ul>
-            <li>
-              <l-en>Profile listing, detail pages, search, and filters</l-en>
-              <l-id>Daftar profil, halaman detail, pencarian, dan filter</l-id>
-            </li>
-            <li>
-              <l-en>Payment simulation, history, and form validation</l-en>
-              <l-id>Simulasi pembayaran, riwayat, dan validasi formulir</l-id>
-            </li>
-          </ul>
-        </article>
-
-        <article class="project-card reveal" data-category="php">
-          <div class="project-topline">
-            <span>06</span>
-            <span>
-              <l-en>Landing Page</l-en>
-              <l-id>Halaman Arahan</l-id>
-            </span>
-          </div>
-          <h3>Pinjaman Berkah</h3>
-          <p class="project-subtitle">
-            <l-en>Fictional Landing Page Project</l-en>
-            <l-id>Proyek Halaman Arahan Fiktif</l-id>
-          </p>
-          <p>
-            <l-en>A fictional landing page project focused on page structure, content hierarchy, and form flow.</l-en>
-            <l-id>Proyek halaman arahan fiktif yang berfokus pada struktur halaman, hierarki konten, dan alur formulir.</l-id>
-          </p>
-          <div class="tags"><span>PHP</span><span>HTML</span><span>CSS</span></div>
-          <ul>
-            <li>
-              <l-en>Hero, product info, gallery, testimonials, and footer</l-en>
-              <l-id>Hero, info produk, galeri, testimoni, dan footer</l-id>
-            </li>
-            <li>
-              <l-en>Loan application pages with basic PHP structure</l-en>
-              <l-id>Halaman pengajuan pinjaman dengan struktur PHP dasar</l-id>
-            </li>
-          </ul>
-        </article>
-
-        <article class="project-card reveal" data-category="database">
-          <div class="project-topline">
             <span>07</span>
             <span>
-              <l-en>Database Design</l-en>
-              <l-id>Desain Database</l-id>
+              <l-en>Discord Bot</l-en>
+              <l-id>Bot Discord</l-id>
             </span>
           </div>
-          <h3>Motor Rental Database</h3>
+          <h3>Aice Music Bot</h3>
           <p class="project-subtitle">
-            <l-en>Database Design Practice</l-en>
-            <l-id>Latihan Desain Database</l-id>
+            <l-en>Discord Music Bot for YouTube, Spotify, and SoundCloud</l-en>
+            <l-id>Bot Musik Discord untuk YouTube, Spotify, dan SoundCloud</l-id>
           </p>
           <p>
-            <l-en>A database design exercise for motorcycle rental data, transaction structure, and rental history.</l-en>
-            <l-id>Latihan desain database untuk data rental motor, struktur transaksi, dan riwayat rental.</l-id>
+            <l-en>A Discord music bot that plays from YouTube, Spotify, and SoundCloud, with interactive buttons, queue management, loop modes, and lyrics.</l-en>
+            <l-id>Bot musik Discord yang memutar dari YouTube, Spotify, dan SoundCloud, dengan tombol interaktif, manajemen antrean, mode loop, dan lirik.</l-id>
           </p>
-          <div class="tags"><span>MySQL</span><span>JSON</span></div>
+          <div class="tags"><span>Node.js</span><span>discord.js</span><span>play-dl</span></div>
           <ul>
             <li>
-              <l-en>Customer, vehicle, schedule, and transaction tables</l-en>
-              <l-id>Tabel pelanggan, kendaraan, jadwal, dan transaksi</l-id>
+              <l-en>Autocomplete search, volume control, and loop modes including autoplay</l-en>
+              <l-id>Pencarian autocomplete, kontrol volume, dan mode loop termasuk autoplay</l-id>
             </li>
             <li>
-              <l-en>Rental history planning with sample JSON data</l-en>
-              <l-id>Perencanaan riwayat sewa dengan sampel data JSON</l-id>
+              <l-en>Bot status updates to match the track currently playing</l-en>
+              <l-id>Status bot berubah sesuai lagu yang sedang diputar</l-id>
             </li>
           </ul>
+          <div class="project-links"><a class="project-link" href="https://github.com/aicerubyjane/aice-music-bot" target="_blank" rel="noreferrer noopener">GitHub</a></div>
         </article>
+
       </div>
     </section>
 
