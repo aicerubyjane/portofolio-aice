@@ -2068,6 +2068,28 @@ html[data-lang="id"] l-en {
   display: none !important;
 }
 
+/* Authorized header accessibility fix: keep controls available while scrolling. */
+.site-header .lang-toggle {
+  min-width: 44px; max-width: 100px; padding-inline: 8px;
+  border-width: 1px; opacity: 1; transform: none; flex-shrink: 0;
+}
+.site-header .theme-toggle {
+  width: 72px; max-width: 120px; opacity: 1; flex-shrink: 0;
+}
+
+/* Projects-only additions; keep original responsive nesting untouched. */
+/* Seven cards exceed the original section-level observer's 16% viewport threshold
+   on narrow screens. Keep this section readable without changing shared JS. */
+.js #projects .reveal { opacity: 1; transform: none; }
+#projects .project-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+#projects .project-link {
+  display: inline-block; padding: 0.45rem 0.9rem; border-radius: 999px;
+  border: 1px solid currentColor; font-size: 0.85rem; font-weight: 600;
+  text-decoration: none; color: inherit; opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+#projects .project-link:hover { opacity: 1; transform: translateY(-1px); }
+
 @media (max-width: 720px) {
   .desktop-only {
     display: none !important;
@@ -2911,14 +2933,3 @@ html.lenis body {
 html.lenis {
   overscroll-behavior: none;
 }
-} /* close legacy max-width: 980px block */
-
-/* project links */
-.project-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
-.project-link {
-  display: inline-block; padding: 0.45rem 0.9rem; border-radius: 999px;
-  border: 1px solid currentColor; font-size: 0.85rem; font-weight: 600;
-  text-decoration: none; color: inherit; opacity: 0.85;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.project-link:hover { opacity: 1; transform: translateY(-1px); }
